@@ -22,11 +22,11 @@ module.exports = function(config) {
 
     mongoose.plugin(updateIfCurrentPlugin);
 
-    var db = mongoose.connect(config.mongoUri).connection;
+    mongoose.connect(config.mongoUri);
 
-    db.catch(function(err) {
-        throw new Error(err);
-    });
+    var db = mongoose.connection;
+
+    db.on('error', console.error.bind(console, 'connection error:'));
 
     var storage = {};
 
