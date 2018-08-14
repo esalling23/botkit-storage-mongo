@@ -1,4 +1,6 @@
 var monk = require('monk');
+var updateIfCurrentPlugin = require('mongoose-update-if-current').updateIfCurrentPlugin;
+var mongoose = require('mongoose');
 
 /**
  * botkit-storage-mongo - MongoDB driver for Botkit
@@ -18,7 +20,9 @@ module.exports = function(config) {
         throw new Error('Need to provide mongo address.');
     }
 
-    var db = monk(config.mongoUri, config.mongoOptions);
+    mongoose.plugin(updateIfCurrentPlugin);
+
+    var db = mongoose.connect(config.mongoUri).connection;
 
     db.catch(function(err) {
         throw new Error(err);
@@ -54,12 +58,7 @@ function getStorage(db, zone) {
             return table.findOne({id: id}, cb);
         },
         save: function(data, cb) {
-            return table.findOneAndUpdate({
-                id: data.id
-            }, data, {
-                upsert: true,
-                returnNewDocument: true
-            }, cb);
+            return table.save(data, cb);
         },
         all: function(cb) {
             return table.find({}, cb);

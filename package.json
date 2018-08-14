@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/howdyai/botkit-storage-mongo#readme",
   "dependencies": {
+    "mongoose": "^5.2.8",
+    "mongoose-update-if-current": "^1.0.3",
     "monk": "^6.0.1"
   },
   "devDependencies": {
