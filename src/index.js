@@ -51,7 +51,7 @@ module.exports = function(config) {
  * @returns {{get: get, save: save, all: all, find: find}}
  */
 function getStorage(db, zone) {
-    var table = db.get(zone);
+    var table = db.collection(zone);
 
     return {
         get: function(id, cb) {
